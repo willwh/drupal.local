@@ -1,7 +1,6 @@
 lullabot-puppet-example
 ===================
 
-
 An example repo to describe usage of VirtualBox, Vagrant & local Puppet provisioning, to provide a development environment for Drupal 8 that runs in a virtual machine on your host system.
 
 ----------
@@ -14,6 +13,7 @@ Install the following applications:
 > [VirtualBox](https://www.virtualbox.org/) - Virtualization software
 
 > [Vagrant](https://www.vagrantup.com/) - Tool for building development environments
+
 
 Check out this repository:
 
@@ -40,6 +40,8 @@ Make sure you are in the drupal.local directory:
 ```
 drush dl drupal-8 --drupal-project-rename=docroot
 ```
+
+If you don't have Drush installed, you can simply unpack an archive of the Drupal 8 source to `drupal.local/docroot`
 
 This should give you a directory structure like so, where [] denotes a directory:
 
