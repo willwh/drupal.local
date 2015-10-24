@@ -12,6 +12,7 @@ Requirements
 Install the following applications:
 
 > [VirtualBox](https://www.virtualbox.org/) - Virtualization software
+
 > [Vagrant](https://www.vagrantup.com/) - Tool for building development environments
 
 Check out this repository:
