@@ -60,7 +60,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   ## Synced folders
-  config.vm.synced_folder ".", "/var/www/drupal",
+  config.vm.synced_folder ".", "/var/www/drupal.local",
       type: SYNC
   config.vm.synced_folder "~/", "/vhome", type: SYNC
 
@@ -84,6 +84,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Run aptitude update before other provisioning takes place
   config.vm.provision "shell", inline: "aptitude update"
 
+  # Local Puppet provisioner
+  # Here we are telling vagrant to load the "vagrant.pp" manifest file, which describes how to configure our VM
+  config.vm.provision "puppet" do |puppet|
+    puppet.module_path = ".puppet/modules"
+    puppet.manifests_path = ".puppet"
+    puppet.manifest_file = "vagrant.pp"
+    puppet.options = "--verbose --show_diff --hiera_config /vagrant/.puppet/hiera.yaml --debug"
+  end
   # Show the VM IP address after a successful provision
   config.vm.provision "shell",
     inline: "echo IP\ Address:\ `ip addr show dev eth1 scope global 2>&1 | grep inet | awk '{print $2}' | awk -F / '{print $1}'`",
