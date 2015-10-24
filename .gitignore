@@ -1,1 +1,7 @@
 .puppet/modules
+.idea
+.vagrant
+
+# You should add a comment below, so that ../docroot is ignored
+# It is being ignored for the purposes of this demo repo.
+docroot
