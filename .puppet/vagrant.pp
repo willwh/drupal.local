@@ -34,7 +34,6 @@ node default {
     }
     class { 'mutt': }
     class { '::php': }
-    class { '::php::xdebug': }
     class { '::php::curl': }
     class { '::php::gd': }
     class { '::php::imagick': }
@@ -46,6 +45,9 @@ node default {
     class { '::php::oauth': }
     class { '::php::opcache': }
     class { '::php::uploadprogress': }
+    class { '::php::xdebug':
+        max_nesting_level => 256,
+    }
     class { '::php::xmlrpc': }
     class { '::php::xsl': }
 
