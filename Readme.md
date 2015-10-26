@@ -53,3 +53,11 @@ drupal.local
  ```
 
 I would highly recommend if plan to use this style of setup in your project, don't clone this repo, just grab an archive - and then commit it all (including Drupal source) to your own repository.
+
+Finally to start everything up, from the root of the repository:
+
+```
+vagrant up
+```
+
+Now you can navigate to http://drupal.local and play with Drupal 8 RC2.
