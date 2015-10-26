@@ -1,0 +1,38 @@
+<%- if (@docroot && !@app) -%>
+
+    <% if @virtualdocumentroot -%>
+        VirtualDocumentRoot <%= @docroot.gsub(/\/$/, '') %>
+    <% else -%>
+        DocumentRoot <%= @docroot.gsub(/\/$/, '') %>
+    <% end -%>
+
+    <Directory <%= @docroot.gsub(/%.*/,'').gsub(/\/$/, '') %>>
+        Options <%= @options %>
+        AllowOverride <%= @allowoverride %>
+        DirectoryIndex <%= @directoryindex %>
+        Require all granted
+    </Directory>
+
+    <%- if @php_value -%>
+        # PHP Values
+        <%- @php_value.each do |value| -%>
+            php_value <%= value[0] %> <%= value[1] %>
+        <%- end -%>
+    <%- end -%>
+
+    <%- if @php_flag -%>
+        # PHP Flags
+        <%- @php_flag.each do |flag| -%>
+            php_flag <%= flag[0] %> <%= flag[1] %>
+        <%- end -%>
+    <%- end -%>
+
+<%- end -%>
+
+<% if @allowencodedslashes -%>
+    AllowEncodedSlashes <%= @allowencodedslashes %>
+<% end -%>
+
+<%- if @custom -%>
+    <%= @custom %>
+<%- end -%>

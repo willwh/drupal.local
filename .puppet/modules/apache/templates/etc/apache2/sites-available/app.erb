@@ -1,0 +1,16 @@
+<%- if @app =~ /^https/i -%>
+    SSLProxyEngine On
+<%- end -%>
+ProxyRequests Off
+ProxyPreserveHost On
+ProxyAddHeaders <%= @proxyaddheaders %>
+
+<%# Proxy websockets directly to the app -%>
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/socket.io [NC]
+RewriteCond %{QUERY_STRING} transport=websocket [NC]
+RewriteRule /(.*) <%= @app.gsub(/^https?/,'ws').gsub(/\/$/,'') %>/$1 [P,L]
+ProxyPass /socket.io/1/websocket/ <%= @app.gsub(/^https?/,'ws').gsub(/\/$/,'') %>/socket.io/1/websocket/ retry=0
+
+ProxyPass / <%= @app.gsub(/\/$/, '') %>/ retry=0 nocanon
+ProxyPassReverse / <%= @app.gsub(/\/$/, '') %>/

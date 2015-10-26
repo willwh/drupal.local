@@ -1,0 +1,99 @@
+## THIS FILE IS MANAGED BY PUPPET
+
+<VirtualHost *:<%= @http_port %>>
+    ServerName <%= @servername %>
+    <%- if @serveralias -%>
+        ServerAlias <%= @serveralias %>
+    <%- end -%>
+
+    CustomLog <%= @_customlog %>
+    ErrorLog <%= @_errorlog %>
+
+    <%- if @https -%>
+        RewriteEngine On
+        <%= @_https %>
+    <%- else -%>
+        <%-# Frontend virtualhost configuration -%>
+        <%= scope.function_template([File.dirname(__FILE__) + "/" + "frontend.erb"]) %>
+
+        <%-# Proxy to Backend -%>
+        <%- if @backend -%>
+            <%= scope.function_template([File.dirname(__FILE__) + "/" + "backend.erb"]) %>
+        <%- else -%>
+            <%- if @app -%>
+                <%= scope.function_template([File.dirname(__FILE__) + "/" + "app.erb"]) %>
+            <%- end -%>
+        <%- end -%>
+    <%- end -%>
+</VirtualHost>
+
+<% if @https %>################################################################################<% end %>
+
+<%- if @https -%>
+    <VirtualHost *:<%= @https_port %>>
+        ServerName <%= @servername %>
+        <%- if @serveralias -%>
+            ServerAlias <%= @serveralias %>
+        <%- end -%>
+
+        CustomLog <%= @_customlog %>
+        ErrorLog <%= @_errorlog %>
+
+        SSLEngine On
+        SSLUseStapling <%= @sslusestapling %>
+        SSLCertificateFile <%= @sslcertificatefile %>
+        SSLCertificateKeyFile <%= @sslcertificatekeyfile %>
+        <%- if @sslcertificatechainfile -%>
+            SSLCertificateChainFile <%= @sslcertificatechainfile %>
+        <%- end -%>
+
+        <%- if @hsts -%>
+            Header add Strict-Transport-Security "max-age=<%= @hsts %>"
+        <%- end -%>
+
+        <%-# Frontend virtualhost configuration -%>
+        <%= scope.function_template([File.dirname(__FILE__) + "/" + "frontend.erb"]) %>
+
+        <%-# Proxy to Backend -%>
+        <%- if @backend -%>
+            <%= scope.function_template([File.dirname(__FILE__) + "/" + "backend.erb"]) %>
+        <%- else -%>
+            <%- if @app -%>
+                <%= scope.function_template([File.dirname(__FILE__) + "/" + "app.erb"]) %>
+            <%- end -%>
+        <%- end -%>
+
+        <%- if (@backend || @app) -%>
+            RequestHeader set X-Forwarded-Proto "https"
+            Header edit Location ^http: https:
+        <%- end -%>
+    </VirtualHost>
+<%- end -%>
+
+<% if @backend %>################################################################################<% end %>
+
+<%- if @backend -%>
+    <VirtualHost *:<%= @backend_port %>>
+        ServerName <%= @servername %>
+        <%- if @serveralias -%>
+            ServerAlias <%= @serveralias %>
+        <%- end -%>
+
+        SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on
+
+        # Log entries here are really only useful for debugging/troubleshooting, so
+        # keep them separate from the real access logs.
+        CustomLog ${APACHE_LOG_DIR}/access.log vhost_combined
+
+        ErrorLog <%= @_errorlog %>
+
+        <%-# Virtualhost configuration -%>
+        <%= scope.function_template([File.dirname(__FILE__) + "/" + "virtualhost.erb"]) %>
+
+        <%-# Proxy to Backend -%>
+        <%- if @app -%>
+            <%= scope.function_template([File.dirname(__FILE__) + "/" + "app.erb"]) %>
+        <%- end -%>
+
+    </VirtualHost>
+<%- end -%>

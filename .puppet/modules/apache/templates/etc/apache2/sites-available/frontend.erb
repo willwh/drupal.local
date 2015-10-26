@@ -1,0 +1,64 @@
+<% if (@htpasswd || @authz_require || @limit || @limitexcept) -%>
+    <%# Access Restrictions -%>
+    <Location />
+
+        <%- if @htpasswd -%>
+            AuthType Basic
+            AuthName "<%= @servername %>"
+            AuthBasicProvider <%= @authbasicprovider %>
+
+            AuthUserFile /etc/apache2/htpasswd/<%= @servername %>
+
+            <%- if @authldapurl -%>
+                AuthLDAPURL <%= @authldapurl %>
+                <%- if @authldapbinddn -%>
+                    AuthLDAPBindDN <%= @authldapbinddn %>
+                <%- end -%>
+                <%- if @authldapbindpassword -%>
+                    AuthLDAPBindPassword <%= @authldapbindpassword %>
+                <%- end -%>
+                <%- if @authldapbindauthoritative -%>
+                    AuthLDAPBindAuthoritative <%= @authldapbindauthoritative %>
+                <%- end -%>
+            <%- end -%>
+
+            Require valid-user
+        <%- end -%>
+
+        <%- if @authz_require -%>
+            Require <%= @authz_require %>
+        <%- end -%>
+
+        <%- if @limit -%>
+            <%- @limit.each_pair do |key, value| -%>
+                <Limit <%= key %>>
+                    <%= value %>
+                </Limit>
+            <%- end -%>
+        <%- end -%>
+
+        <%- if @limitexcept -%>
+            <%- @limitexcept.each_pair do |key, value| -%>
+                <LimitExcept <%= key %>>
+                    <%= value %>
+                </LimitExcept>
+            <%- end -%>
+        <%- end -%>
+
+    </Location>
+<%- end -%>
+
+<%-# Custom Rewrite Rules -%>
+<%- if @rewrite -%>
+    RewriteEngine On
+    <%= @rewrite %>
+<%- end -%>
+
+<%- if @serveralias && @normalize -%>
+    # Normalize URLs to <%= @servername %>
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} !^<%= @servername.gsub(/\./, "\\.") %>$ [NC]
+    RewriteRule ^ %{REQUEST_SCHEME}://<%= @servername %>%{REQUEST_URI} [L,R=301]
+<%- end -%>
+
+<%= scope.function_template([File.dirname(__FILE__) + "/" + "virtualhost.erb"]) %>

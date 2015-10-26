@@ -1,3 +1,0 @@
-[submodule ".puppet/modules"]
-	path = .puppet/modules
-	url = https://github.com/lullabot/puppet-modules

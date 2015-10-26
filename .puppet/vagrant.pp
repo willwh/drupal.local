@@ -45,11 +45,14 @@ node default {
     class { '::php::oauth': }
     class { '::php::opcache': }
     class { '::php::uploadprogress': }
-    class { '::php::xdebug':
-        max_nesting_level => 256,
-    }
+    class { '::php::xdebug': }
     class { '::php::xmlrpc': }
     class { '::php::xsl': }
+    class { '::postfix':
+        canonical_maps => {
+          '/.*@.*/' => 'vagrant',
+        },
+    }
 
 
 # MySQL
@@ -101,6 +104,18 @@ node default {
     apache::vhost { 'drupal.local':
         errorlog  => '${APACHE_LOG_DIR}/error.log',
         customlog => '${APACHE_LOG_DIR}/access.log combined',
+        php_value => {
+            'memory_limit'        => '256M',
+            'max_execution_time'  => 120,
+            'connect_timeout'     => 300,
+            'default_socket_timeout' => 300,
+            'xdebug.remote_enable' => 'on',
+            'xdebug.remote_host' => '127.0.0.1',
+            'xdebug.remote_port' => 9000,
+            'xdebug.remote_connect_back' => 'on',
+            'xdebug.max_nesting_level' => 256,
+            'xdebug.idekey' => 'PHPSTORM'
+        },
     }
 
 
