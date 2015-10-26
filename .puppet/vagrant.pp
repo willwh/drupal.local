@@ -48,11 +48,6 @@ node default {
     class { '::php::xdebug': }
     class { '::php::xmlrpc': }
     class { '::php::xsl': }
-    class { '::postfix':
-        canonical_maps => {
-          '/.*@.*/' => 'vagrant',
-        },
-    }
 
 
 # MySQL
