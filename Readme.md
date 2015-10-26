@@ -1,4 +1,4 @@
-lullabot-puppet-example
+drupal.local
 ===================
 
 An example repo to describe usage of VirtualBox, Vagrant & local Puppet provisioning, to provide a development environment for Drupal 8 that runs in a virtual machine on your host system.
