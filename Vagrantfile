@@ -60,9 +60,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   ## Synced folders
-  config.vm.synced_folder ".", "/var/www/drupal.local",
-      type: SYNC
-  config.vm.synced_folder "~/", "/vhome", type: SYNC
+  config.vm.synced_folder ".", "/var/www/drupal.local", type: SYNC
+  config.vm.synced_folder "~/", "/vhome"
 
   # ~/.gitconfig
   config.vm.provision "shell",
