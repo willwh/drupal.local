@@ -30,7 +30,7 @@ node default {
     class { 'apache::mod::rewrite': }
     class { 'avahi': }
     class { 'drush': 
-        version => '8.0.0-rc2',
+        version => '8.0.0-rc4',
     }
     class { 'mutt': }
     class { '::php': }
@@ -45,7 +45,9 @@ node default {
     class { '::php::oauth': }
     class { '::php::opcache': }
     class { '::php::uploadprogress': }
-    class { '::php::xdebug': }
+    class { '::php::xdebug': 
+        max_nesting_level => '256',
+    }
     class { '::php::xmlrpc': }
     class { '::php::xsl': }
 
