@@ -53,3 +53,15 @@ You will be at your project root directory: /var/www/drupal.local/docroot
 Now you can navigate to http://drupal.local and play with Drupal 8.
 
 Currently using Drush-RC4.
+
+Speeding Things Up!
+-------------------
+
+[NFS](https://docs.vagrantup.com/v2/synced-folders/nfs.html) synced folders can greatly speed up your VM.
+
+If you have NFS installed on your system, edit the Vagrantfile's SYNC="" property like so:
+
+```
+SYNC="nfs"
+```
+
