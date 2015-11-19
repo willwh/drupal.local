@@ -120,5 +120,10 @@ node default {
 	      ensure => directory, 
 	      owner  => 'vagrant',
     }
+
+    file { '/etc/profile.d/drupal.sh':
+          source => '/var/www/drupal.local/.puppet/.profile',
+          owner => 'vagrant',
+    }
 }
 
