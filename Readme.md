@@ -42,6 +42,14 @@ Finally to start everything up, from the root of the repository:
 vagrant up
 ```
 
+To ssh in to your VM, to use drush or mysql type:
+
+```
+vagrant ssh
+```
+
+You will be at your project root directory: /var/www/drupal.local/docroot
+
 Now you can navigate to http://drupal.local and play with Drupal 8.
 
 Currently using Drush-RC4.
