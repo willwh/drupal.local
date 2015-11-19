@@ -42,4 +42,6 @@ Finally to start everything up, from the root of the repository:
 vagrant up
 ```
 
-Now you can navigate to http://drupal.local and play with Drupal 8 RC2.
+Now you can navigate to http://drupal.local and play with Drupal 8.
+
+Currently using Drush-RC4.
