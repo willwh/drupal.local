@@ -30,7 +30,7 @@ node default {
     class { 'apache::mod::rewrite': }
     class { 'avahi': }
     class { 'drush': 
-        version => '8.0.0-rc4',
+        version => '8.0.0',
     }
     class { 'mutt': }
     class { '::php': }
