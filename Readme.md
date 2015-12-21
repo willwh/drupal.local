@@ -52,8 +52,6 @@ You will be at your project root directory: /var/www/drupal.local/docroot
 
 Now you can navigate to http://drupal.local and play with Drupal 8.
 
-Currently using Drush-RC4.
-
 Speeding Things Up!
 -------------------
 
