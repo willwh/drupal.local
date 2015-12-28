@@ -1,6 +1,8 @@
 drupal.local
 ===================
 
+[![Join the chat at https://gitter.im/willwh/drupal.local](https://badges.gitter.im/willwh/drupal.local.svg)](https://gitter.im/willwh/drupal.local?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 An example repo to describe usage of VirtualBox, Vagrant & local Puppet provisioning, to provide a development environment for Drupal 8 that runs in a virtual machine on your host system.
 
 ----------
